@@ -1,53 +1,51 @@
-let arr = [2, 3, 4, 1];
+const arr = [2, 3, 4, 1];
 function sumOfOther(a) {
-    let sum = a.reduce((a, e) => a + e);
-    return a.map(e => sum - e);
+  const sum = a.reduce((с, e) => с + e);
+  return a.map(e => sum - e);
 }
-
-console.log(sumOfOther(arr));
-
-
-function sum(a, b) {
-    return a + b;
-}
-function make() {
-    let args = [...arguments];
-    return function ret() {
-        if (typeof arguments[0] === 'function') {
-            args = args.reduce((a, e) => a + e);
-            return args;
-        }
-        args = [...args, ...arguments];
-        return ret;
+sumOfOther(arr);
+// console.log(sumOfOther(arr));
+// function sum(a, b) {return a + b;}
+function make(...arg) {
+  let args = arg;
+  return function ret(...a) {
+    args.push(...a);
+    for (let i = 0; i < args.length; i += 1) {
+      if (typeof args[i] === 'function') {
+        args.pop();
+        args = args.reduce((x, e) => x + e);
+        return args;
+      }
     }
+    return ret;
+  };
 }
-
-console.log(make(15)(34, 21, 666)(41)(sum));
-
-
-let tree = { "value": 100, "left": { "value": 90, "left": { "value": 70 }, "right": { "value": 99 } }, "right": { "value": 120, "left": { "value": 110 }, "right": { "value": 130 } } };
-let array = recursion(tree);
-
+make();
+// console.log(make(15)(34, 21, 666)(41)(sum));
 function recursion(tree) {
-    let arr = [];
-    let count = 0;
-    rec(tree, count);
-    return arr;
-
-    function rec(tree, count) {
-        if (tree.value) {
-            if (!arr[count]) {
-                arr[count] = [];
-            }
-            arr[count].push(tree.value);
-        } else return;
-        if (tree.left) {
-            rec(tree.left, count + 1);
-        }
-        if (tree.right) {
-            rec(tree.right, count + 1);
-        }
+  const ar = [];
+  const count1 = 0;
+  function rec(tree1, count) {
+    if (tree1.value) {
+      if (!ar[count]) {
+        ar[count] = [];
+      }
+      ar[count].push(tree1.value);
+    } else return;
+    if (tree1.left) {
+      rec(tree1.left, count + 1);
     }
+    if (tree1.right) {
+      rec(tree1.right, count + 1);
+    }
+  }
+  rec(tree, count1);
+  return ar;
 }
-
-console.log(array); 
+recursion();
+// let bintree = { 'value': 100, "left": { 'value': 90, 'left':
+// { 'value': 70 }, 'right': { 'value': 99 } }, 'right':
+// { 'value': 120, 'left': { 'value': 110 }, 'right':
+// { 'value': 130 } } };
+// let array = recursion(bintree);
+// console.log(array);
