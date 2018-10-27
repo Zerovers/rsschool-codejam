@@ -5,3 +5,21 @@ function sumOfOther(a) {
 }
 
 console.log(sumOfOther(arr));
+
+
+function sum(a, b) { 
+    return a + b; 
+ } 
+function make(){ 
+    let args = [...arguments]; 
+    return function ret () { 
+        if (typeof arguments[0] === 'function') {
+            args = args.reduce((a,e) => a + e);
+            return args;
+        } 
+    args = [...args,...arguments]; 
+    return ret; 
+   } 
+ }
+
+console.log(make(15)(34, 21, 666)(41)(sum));
